@@ -17,7 +17,6 @@ public class PaymentPageTest {
 
     @AfterAll
     static void tearDownAll() {
-        cleanDatabase();
         SelenideLogger.removeListener("allure");
     }
 
@@ -26,6 +25,11 @@ public class PaymentPageTest {
         paymentPage = open("http://localhost:8080", PaymentPage.class);
 
         paymentPage.choosePayment();
+    }
+
+    @AfterEach
+    void cleanDb() {
+        cleanDatabase();
     }
 
     @BeforeAll
@@ -406,7 +410,7 @@ public class PaymentPageTest {
     public void shouldNotPaymentWhenCardDateIncorrect() {
         paymentPage.verifyFormName();
         paymentPage.fillForm(new DataHelper.CardInfo(getApprovedCardNumber(),
-                getCurrentMonth(-1), getYear(0), getHolder(), getCvc()));
+                getSpecifiedMonth(-1), getYear(0), getHolder(), getCvc()));
         paymentPage.verifyNotificationCardDateIsIncorrect(0);
     }
 
@@ -415,7 +419,7 @@ public class PaymentPageTest {
     public void shouldPaymentWhenCardDateIsCurrent() {
         paymentPage.verifyFormName();
         paymentPage.fillForm(new DataHelper.CardInfo(getApprovedCardNumber(),
-                getCurrentMonth(0), getYear(0), getHolder(), getCvc()));
+                getSpecifiedMonth(0), getYear(0), getHolder(), getCvc()));
         paymentPage.verifyNotificationSuccessPayment();
     }
 
@@ -424,7 +428,7 @@ public class PaymentPageTest {
     public void shouldPaymentWhenCardDateIsNextCurrent() {
         paymentPage.verifyFormName();
         paymentPage.fillForm(new DataHelper.CardInfo(getApprovedCardNumber(),
-                getCurrentMonth(1), getYear(0), getHolder(), getCvc()));
+                getSpecifiedMonth(1), getYear(0), getHolder(), getCvc()));
         paymentPage.verifyNotificationSuccessPayment();
     }
 }

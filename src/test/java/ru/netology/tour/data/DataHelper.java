@@ -2,7 +2,6 @@ package ru.netology.tour.data;
 
 import com.github.javafaker.CreditCardType;
 import com.github.javafaker.Faker;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
 
@@ -88,7 +87,7 @@ public class DataHelper {
         return ("7");
     }
 
-    public static String getCurrentMonth(int shift) {
+    public static String getSpecifiedMonth(int shift) {
         return LocalDate.now().plusMonths(shift).format(DateTimeFormatter.ofPattern("MM"));
     }
 
